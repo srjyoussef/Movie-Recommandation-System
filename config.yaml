@@ -1,0 +1,61 @@
+# Movie Recommendation System Configuration
+
+# Data paths (relative to project root)
+data:
+  ratings_file: "ml-ratings.csv"
+  movies_file: "ml-movies.csv"
+  links_file: "ml-links.csv"
+
+# Temporal split configuration
+split:
+  train_ratio: 0.70
+  validation_ratio: 0.15
+  test_ratio: 0.15
+  verify_no_leakage: true
+
+# Model hyperparameters
+models:
+  svd:
+    n_factors: 100
+    learning_rate: 0.01
+    regularization: 0.02
+    n_epochs: 20
+    random_state: 42
+
+  nmf:
+    n_components: 100
+    max_iter: 200
+    random_state: 42
+
+  # Sampling for faster training (set to 1.0 for full dataset)
+  sample_fraction: 0.05
+  sample_warning: true
+
+# Evaluation settings
+evaluation:
+  k: 10  # Top-K recommendations
+  min_k: 1
+  max_k: 100
+
+# Production settings
+production:
+  max_model_size_mb: 300
+  max_latency_ms: 100
+  min_throughput_recs_per_sec: 100
+
+  # Logging
+  log_level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+
+  # Cold start
+  cold_start_strategy: "popularity"  # popularity, content, random
+
+# Business metrics (for impact analysis)
+business:
+  total_users: 162000
+  active_user_ratio: 0.40
+  recommendations_per_user_per_week: 10
+  baseline_ctr: 0.05
+  value_per_click_usd: 0.15
+  weeks_per_year: 52
+  implementation_cost_usd: 50000
+  annual_maintenance_usd: 20000
